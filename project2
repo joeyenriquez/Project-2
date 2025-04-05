@@ -22,6 +22,13 @@ def search_primes(start):
         num +=1
     return largest_prime
 
+# Fibonacci function 
+def get_fib(n):
+    a, b= 0,1
+    for _ in range (n):
+        a,b =b, a +b
+    return a
+
 # Multiprocessing
 def multiprocessing_prime(time_limit):
     with concurrent.futures.ProcessPoolExecutor() as executor:
