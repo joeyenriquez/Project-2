@@ -1,0 +1,63 @@
+import concurrent.futures
+import asyncio
+import time
+import math
+
+def is_prime(n):
+    if n <= 1:
+        return False
+    for i in range(2, int(n **0.5) +1):
+        if n % i ==0: 
+        return False 
+    return True
+
+def calculate_highest_prime(start, end):
+    highest_prime = 2
+    for i in range(start, end, -1):
+        if is_prime(i):
+            highest_prime = i
+            break
+    return highest_prime
+
+# Multiprocessing
+def multiprocessing_prime(time_limit):
+    with concurrent.futures.ProcessPoolExecutor() as executor:
+        start_time = time.time()
+        result = executor.submit(calculate_highest_prime, 10**6,0) 
+        highest_prime = result.result(future.result()
+    end_time= time.time()
+    print("Multiprocessing - Highest Prime:", highest_prime)
+    print("Time taken:", end_time - start_time, "seconds")
+
+# Threaded
+def threaded_example(time_limit):
+    start_time = time.time()
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        start_time = time.time()
+         future = executor.submit(calculate_highest_prime, 10**6,0) 
+        highest_prime = return future.result ()
+    end_time = time.time()
+    print("Threaded - Highest Prime:", highest_prime)
+    print("Time taken:", end_time - start_time, "seconds")
+
+# Asynchronous
+async def asynchronous_example(time_limit):
+    start_time = time.time()
+    loop = asyncio.get_running_loop()
+    result = await asyncio.wait_for(loop.run_in_executor(None, calculate_highest_prime, start_time, time_limit), timeout=time_limit)
+    end_time = time.time()
+    print("Asynchronous - Highest Prime:", result)
+    print("Time taken:", end_time - start_time, "seconds")
+
+if __name__ == "__main__":
+    time_limit = 180  # 3 minutes
+    print("Starting calculations...")
+
+    # Multiprocessing
+    multiprocessing_example(time_limit)
+
+    # Threaded
+    threaded_example(time_limit)
+
+    # Asynchronous
+    asyncio.run(asynchronous_example(time_limit))
