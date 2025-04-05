@@ -1,7 +1,7 @@
-import concurrent.futures
+import multiprocessing
+import threading
 import asyncio
 import time
-import math
 
 def is_prime(n):
     if n <= 1:
@@ -11,13 +11,16 @@ def is_prime(n):
         return False 
     return True
 
-def calculate_highest_prime(start, end):
-    highest_prime = 2
-    for i in range(start, end, -1):
-        if is_prime(i):
-            highest_prime = i
-            break
-    return highest_prime
+def search_primes(start):
+    num=start
+    largest_prime = None   
+    t_end= time.time () +180 # 3 minutes time limit
+
+    while time.time ()<t_end:
+        if is_prime(num):
+            largest_prime = num
+        num +=1
+    return largest_prime
 
 # Multiprocessing
 def multiprocessing_prime(time_limit):
